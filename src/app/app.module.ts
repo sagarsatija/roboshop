@@ -19,6 +19,8 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth.service';
+import { AuthGuardService as authGuard, AuthGuardService } from './auth-guard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,35 +48,36 @@ import { FormsModule } from '@angular/forms';
         path:'',component:HomeComponent
       },
       {
+        path:'login',component:LoginComponent
+      },
+      {
         path:'products',component:ProductsComponent
       },
       {
         path:'shopping-cart',component:ShoppingCartComponent
       },
       {
-        path:'checkout',component:CheckoutComponent
+        path:'checkout',component:CheckoutComponent,canActivate:[AuthGuardService]
       },
       {
-        path:'order-successs',component:OrderSuccessComponent
+        path:'order-successs',component:OrderSuccessComponent,canActivate:[AuthGuardService]
 
       },
+      
       {
-        path:'login',component:LoginComponent
+        path:'admin/orders',component:AdminOrdersComponent,canActivate:[AuthGuardService]
       },
       {
-        path:'admin/orders',component:AdminOrdersComponent
+        path:'admin/products',component:AdminProductsComponent,canActivate:[AuthGuardService]
       },
       {
-        path:'admin/products',component:AdminProductsComponent
-      },
-      {
-        path:'orders',component:MyOrdersComponent
+        path:'orders',component:MyOrdersComponent,canActivate:[AuthGuardService]
       },
     
     ])
     
   ],
-  providers: [],
+  providers: [AuthService,authGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
