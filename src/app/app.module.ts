@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { AuthGuardService as authGuard, AuthGuardService } from './auth-guard.service';
+import { AdminAuthGuardService } from './admin-auth-guard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,7 @@ import { AuthGuardService as authGuard, AuthGuardService } from './auth-guard.se
     OrderSuccessComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,10 +66,10 @@ import { AuthGuardService as authGuard, AuthGuardService } from './auth-guard.se
       },
       
       {
-        path:'admin/orders',component:AdminOrdersComponent,canActivate:[AuthGuardService]
+        path:'admin/orders',component:AdminOrdersComponent,canActivate:[AuthGuardService,AdminAuthGuardService]
       },
       {
-        path:'admin/products',component:AdminProductsComponent,canActivate:[AuthGuardService]
+        path:'admin/products',component:AdminProductsComponent,canActivate:[AuthGuardService,AdminAuthGuardService]
       },
       {
         path:'orders',component:MyOrdersComponent,canActivate:[AuthGuardService]
@@ -77,7 +78,7 @@ import { AuthGuardService as authGuard, AuthGuardService } from './auth-guard.se
     ])
     
   ],
-  providers: [AuthService,authGuard],
+  providers: [AuthService,authGuard,AdminAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
